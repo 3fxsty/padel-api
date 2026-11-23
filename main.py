@@ -12,7 +12,6 @@ reservas = {}
 
 apertura = time(9, 0)
 cierre = time(22, 0)
-hoy = date.today()
 zona = ZoneInfo("Europe/Madrid")
 
 class Reserva(BaseModel):
@@ -20,7 +19,7 @@ class Reserva(BaseModel):
     date: datetime = Field(
         examples=["2026-11-23T16:00:00"]
     )
-    pista: int = 1
+    pista: int = 0
 
 contador_reservas: int = 0
 

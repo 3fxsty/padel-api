@@ -31,6 +31,5 @@ GET /reservas?fecha=x
 
 DELETE /reservas/{id}
 - 204: cancelas la reserva
-- 409: reserva ya cancelada
 - 404: no se encuentra la reserva
 - 422: no cumple los criterios para cancelar la reserva (plazo de 24h pasado)
