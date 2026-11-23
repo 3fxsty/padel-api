@@ -1,4 +1,3 @@
-from email.policy import HTTP
 import datetime
 
 from fastapi import FastAPI, HTTPException
@@ -37,12 +36,18 @@ async def get_reservas():
 
 @app.post("/reservas", status_code=201)
 async def crear_reserva(reserva: Reserva):
-    global contador_reservas
-    contador_reservas += 1
     datos = reserva.model_dump()
-    datos["id"] = contador_reservas
-    reservas[contador_reservas] = datos
 
-    return datos
+    if datos["pista"] in pistas:
+        global contador_reservas
+        contador_reservas += 1
+        datos["id"] = contador_reservas
+        reservas[contador_reservas] = datos
+
+        return datos
+
+    else:
+        raise HTTPException(status_code=404, detail="No encontramos esa pista.")
+
 
 # @app.get("/reservas/")
