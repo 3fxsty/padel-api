@@ -41,6 +41,18 @@ async def get_reservas():
     list_resrvas = list(reservas.values())
     return list_resrvas
 
+@app.get("/reservas")
+async def get_reservas_fecha(fecha: date):
+
+    reservas_fecha = []
+
+    for r in reservas.values():
+        if fecha == r["date"].date():
+            reservas_fecha.append(r)
+
+    return reservas_fecha
+
+
 @app.post("/reservas", status_code=201)
 async def crear_reserva(reserva: Reserva):
     datos = reserva.model_dump()
