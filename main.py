@@ -36,10 +36,26 @@ async def get_pista_id(pista_id: int):
 
     return pistas.get(pista_id)
 
-app.get("/reservas")
-async def get_reservas():
-    list_resrvas = list(reservas.values())
-    return list_resrvas
+@app.get("/pistas/{pista_id}/horas")
+async def get_horas_libres_fecha(pista_id: int, fecha: date):
+    horas_ocupadas = []
+    horas_libres = []
+
+    if pistas.get(pista_id) is None:
+        raise HTTPException(status_code=404, detail=("No se ha encontrado la pista que buscas."))
+
+    if fecha < date.today():
+        raise HTTPException(status_code=422, detail="La fecha introducida ha pasado ya.")
+
+    for r in reservas.values():
+        if r["pista"] == pista_id and r["date"].date() == fecha:
+            horas_ocupadas.append(r["date"].hour)
+    
+    for hora in range(apertura.hour, cierre.hour):
+        if hora not in horas_ocupadas:
+            horas_libres.append(hora)
+
+    return horas_libres
 
 @app.get("/reservas")
 async def get_reservas_fecha(fecha: date):

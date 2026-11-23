@@ -6,7 +6,7 @@ Esta api sirve para ver el horario de pistas de padel de un club, se podra hacer
 - Datos bien rellenados pero que rompen una regla del club: 422.
 - Choque con algo que ya existe (hueco ocupado, reserva ya cancelada): 409.
 - Fechas en formato AAAA-MM-DD.
-- Cancelar una reserva: 204.
+- Cancelar una reserva = se borra la reserva.
 
 GET /pistas
 - 200: devuelve las pistas / te devuelve una lista vacia (no hay pistas)
