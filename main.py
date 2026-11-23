@@ -1,4 +1,4 @@
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
 from fastapi import FastAPI, HTTPException
@@ -100,3 +100,16 @@ async def crear_reserva(reserva: Reserva):
     datos["date"] = fecha
 
     return datos
+
+@app.delete("/reservas/{reserva_id}", status_code=204)
+async def delete_reserva(reserva_id: int):
+    now = datetime.now(zona)
+    r = reservas.get(reserva_id)
+
+    if r is None:
+        raise HTTPException(status_code=404, detail="No se ha encontrado ninguna reserva con ese id.")
+
+    if (r["date"] - now) < timedelta(hours=24):
+        raise HTTPException(status_code=422, detail="Quedan menos de 24h para la reserva.")
+
+    reservas.pop(reserva_id)
