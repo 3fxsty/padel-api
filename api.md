@@ -17,11 +17,12 @@ GET /pistas/{id}
 
 GET /pistas/{id}/horas?fecha=x
 - 404: no se encuentra la pista
+- 422: has entrado una hora pasada
 - 200: devuelve las horas libres para una pista de una fecha (horas)
 
 POST /reservas
 - 201: crea la reserva (id reserva, nombre, fecha, hora, pista)
-- 422: has puesto algun dato mal (fuera del horario / fecha ya pasada)
+- 422: has puesto algun dato mal (fuera del horario / fecha ya pasada / hora con minutos o segundos)
 - 409: has intentado una reserva en una hora ocupada
 - 404: has reservado en una pista que no existe
 

@@ -19,7 +19,7 @@ class Reserva(BaseModel):
     date: datetime = Field(
         examples=["2026-11-23T16:00:00"]
     )
-    pista: int = 0
+    pista: int
 
 contador_reservas: int = 0
 
